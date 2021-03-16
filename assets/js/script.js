@@ -1,7 +1,7 @@
 var node = ['.nine', '.ten', '.eleven', '.twelve', '.one', '.two', '.three', '.four','.five'];
 var classEl;
-var text;
-var integer;
+// var text;
+// var integer;
 var saveEl = $('.textarea');
 var buttonEl = $('saveBtn');
 var now = moment().format("hh");
@@ -32,24 +32,26 @@ function changeColor() {
          //parse the number from the text and save as integer
          integer = parseInt(text,10);
         // compare the integer to the hour of the current time
-        compare();
+        
 
+
+        if (now == integer){
+                    var change = selectionEl;
+                    //if they are equal as current hour change background to red
+                    change.setAttribute('class','present');
+                    var prevSibling = change.previousElementSibling;
+                    prevSibling.setAttribute('class', 'past');
+                    var nextSibling = change.nextElementSibling;
+                    nextSibling.setAttribute('class', 'future');
+                }  
          }
     };
 
 
 // compare the integer to the hour of the current time
-function compare(){
-    if (now === integer){
-            var change = document.querySelector(node[i]);
-            //if they are equal as current hour change background to red
-            change.setAttribute('class','present');
-            var prevSibling = change.previousElementSibling;
-            prevSibling.setAttribute('class', 'past');
-            var nextSibling = change.nextElementSibling;
-            nextSibling.setAttribute('class', 'future');
-        }  
-};
+// function compare(){
+    
+
 
 
 //save and post user's add to text area when button is clicked
