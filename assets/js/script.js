@@ -28,13 +28,12 @@ function changeColor() {
         //set query selector for each id in node array
          var selectionEl = document.querySelector(node[i]);
          //pull the text from div with above id
-         text = selectionEl.textContent;
+         text = $(node[i]).text();
          //parse the number from the text and save as integer
          integer = parseInt(text,10);
+
         // compare the integer to the hour of the current time
-        
-
-
+    
         if (now == integer){
                     var change = selectionEl;
                     //if they are equal as current hour change background to red
@@ -47,15 +46,16 @@ function changeColor() {
          }
     };
 
-
-// compare the integer to the hour of the current time
-// function compare(){
-    
-
-
-
 //save and post user's add to text area when button is clicked
 function saveMeeting(){
-    var meeting = saveEl.val();
-        saveEl.append(meeting);
-    };
+    //when save button is clicked
+    $(".saveBtn").click(function(){
+        //pull value from related textarea
+        var meeting = $.trim($(".textarea").val());
+        $.text(meeting);
+        console.log(meeting);
+    });
+        // $(this).text(meeting);
+        // $(event.delegateTarget).val(meeting);
+        // saveEl.append(meeting);
+}
