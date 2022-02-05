@@ -15,7 +15,7 @@ var timerInterval = setInterval(function (){
 
 },5000);
 //save and post user's add to text area when button is clicked
-if(buttonEl.on('click', saveMeeting()));
+
 
 
 
@@ -35,7 +35,7 @@ function changeColor() {
         // compare the integer to the hour of the current time
     
         if (now == integer){
-                    var change = selectionEl;
+                    var change = selectionEl.next;
                     //if they are equal as current hour change background to red
                     change.setAttribute('class','present');
                     var prevSibling = change.previousElementSibling;
@@ -49,13 +49,14 @@ function changeColor() {
 //save and post user's add to text area when button is clicked
 function saveMeeting(){
     //when save button is clicked
-    $(".saveBtn").click(function(){
+    $(".saveBtn").click(function(event){
         //pull value from related textarea
-        var meeting = $.trim($(".textarea").val());
-        $.text(meeting);
-        console.log(meeting);
+        meeting = $.trim($(".textarea").val());
+        $(this).prev().text(meeting);
+        meeting = "";
     });
         // $(this).text(meeting);
         // $(event.delegateTarget).val(meeting);
         // saveEl.append(meeting);
 }
+saveMeeting();
