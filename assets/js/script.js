@@ -5,6 +5,8 @@ var classEl;
 var saveEl = $('.textarea');
 var buttonEl = $('saveBtn');
 var now = moment().format("hh");
+var calendar = [];
+
 
 //set the date and time and run function. recheck and post time
 var timerInterval = setInterval(function (){
@@ -35,7 +37,7 @@ function changeColor() {
         // compare the integer to the hour of the current time
     
         if (now == integer){
-                    var change = selectionEl.next;
+                    var change = selectionEl;
                     //if they are equal as current hour change background to red
                     change.setAttribute('class','present');
                     var prevSibling = change.previousElementSibling;
@@ -45,18 +47,35 @@ function changeColor() {
                 }  
          }
     };
-
+var storeEvents = function(){
+    localStorage.setItem("calendar", JSON.stringify(calendar));
+}
+var getStoredEvents = function(){
+    
+}
 //save and post user's add to text area when button is clicked
 function saveMeeting(){
-    //when save button is clicked
-    $(".saveBtn").click(function(event){
-        //pull value from related textarea
-        meeting = $.trim($(".textarea").val());
-        $(this).prev().text(meeting);
-        meeting = "";
+    
+    $(".saveBtn").click(function (event) {
+        var currentEvent = {};
+        event.preventDefault();
+
+        //capture event id and set in currentEvent object
+        currentEvent.timeblock = event.target.id
+
+        //capture textarea text and add it to the calendar
+        currentEvent.meeting = $(this).siblings(".textarea").val();
+        $(this).prev().text(currentEvent.meeting);
+
+        //push currentEvent to calendar object for local storage
+        console.log(currentEvent);
+        calendar.push(currentEvent);
+        console.log(calendar);
+        
+
     });
-        // $(this).text(meeting);
-        // $(event.delegateTarget).val(meeting);
-        // saveEl.append(meeting);
+
+
+
 }
 saveMeeting();
