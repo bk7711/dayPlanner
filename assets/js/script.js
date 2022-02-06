@@ -9,19 +9,16 @@ var calendar = [];
 
 
 //set the date and time and run function. recheck and post time
+
+
 var timerInterval = setInterval(function (){
     var currentEl = moment().format("dddd MMMM DD,YYYY hh:mm");
     $('#currentDay').text(currentEl);
+    //pull events from local storage
     
     changeColor();
 
 },5000);
-//save and post user's add to text area when button is clicked
-
-
-
-
-
 
 function changeColor() {
     var i;
@@ -51,6 +48,15 @@ var storeEvents = function(){
     localStorage.setItem("calendar", JSON.stringify(calendar));
 }
 var getStoredEvents = function(){
+    if(localStorage.length > 0){
+        calendar = JSON.parse(localStorage.getItem('calendar'));
+        for(var i = 0; i < calendar.length; i++){
+            var oldTask = $('body').find('button[id="'+calendar[i].timeblock+'"]');
+            oldTask.prev().text(calendar[i].meeting);
+        }
+    }else{
+        alert("You have no meetings scheduled!")
+    }
     
 }
 //save and post user's add to text area when button is clicked
@@ -62,20 +68,25 @@ function saveMeeting(){
 
         //capture event id and set in currentEvent object
         currentEvent.timeblock = event.target.id
-
+        console.log(event.target.id);
         //capture textarea text and add it to the calendar
         currentEvent.meeting = $(this).siblings(".textarea").val();
         $(this).prev().text(currentEvent.meeting);
 
         //push currentEvent to calendar object for local storage
-        console.log(currentEvent);
         calendar.push(currentEvent);
-        console.log(calendar);
+         
         
+        storeEvents();
 
     });
 
 
 
 }
-saveMeeting();
+var loadCalendar = function(){
+    getStoredEvents();
+    saveMeeting();
+};
+
+loadCalendar();
