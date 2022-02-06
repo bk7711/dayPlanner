@@ -22,9 +22,9 @@ var timerInterval = setInterval(function (){
 
 function changeColor() {
     var i;
-    //loop through the array of id's from html
+    //loop through the array of classes from html
     for (i = 0; i < node.length; i++){
-        //set query selector for each id in node array
+        //set query selector for each class in node array
          var selectionEl = document.querySelector(node[i]);
          //pull the text from div with above id
          text = $(node[i]).text();
@@ -34,13 +34,21 @@ function changeColor() {
         // compare the integer to the hour of the current time
     
         if (now == integer){
-                    var change = selectionEl;
+                    var change = selectionEl.getElementsByTagName("textarea");
+                    
+                    
                     //if they are equal as current hour change background to red
-                    change.setAttribute('class','present');
-                    var prevSibling = change.previousElementSibling;
-                    prevSibling.setAttribute('class', 'past');
-                    var nextSibling = change.nextElementSibling;
-                    nextSibling.setAttribute('class', 'future');
+                    $(change).addClass("present");
+                    //change previous timeblock
+                    var prevDiv = ($(selectionEl).prevAll());
+                    var prevSibling = $(prevDiv).find('textarea');
+                    
+                    $(prevSibling).addClass('past');
+
+                    var nextDiv = ($(selectionEl).nextAll());
+                    var nextSibling = $(nextDiv).find('textarea');
+                    
+                    $(nextSibling).addClass('future');
                 }  
          }
     };
